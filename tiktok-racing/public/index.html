@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikTok LIVE Racing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #172554, #020617 45%);
+    }
+    canvas { image-rendering: auto; }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    .glass {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white">
+  <div class="max-w-7xl mx-auto p-4 md:p-6">
+    <header class="mb-5">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-black">🏎️ TikTok LIVE Racing</h1>
+          <p class="text-slate-400 text-sm mt-1">Penonton mengendalikan balapan secara realtime.</p>
+        </div>
+        <div class="text-sm text-slate-400">
+          Viewer: <span id="viewerCount" class="text-white font-bold">0</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="glass rounded-2xl p-4 mb-5 shadow-2xl">
+      <div class="grid md:grid-cols-[1fr_auto] gap-4">
+        <div>
+          <label for="username" class="block text-sm font-medium text-slate-300 mb-2">
+            Username TikTok LIVE
+          </label>
+          <input
+            id="username"
+            type="text"
+            placeholder="@username"
+            autocomplete="off"
+            class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 outline-none focus:border-blue-500 transition"
+          />
+        </div>
+
+        <div class="flex items-end gap-2">
+          <button
+            id="connectBtn"
+            class="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 font-bold transition disabled:opacity-40"
+          >Connect</button>
+          <button
+            id="disconnectBtn"
+            disabled
+            class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 font-bold transition disabled:opacity-40"
+          >Disconnect</button>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-center gap-2">
+        <span id="statusDot" class="status-dot bg-red-500"></span>
+        <span id="statusText" class="text-sm text-slate-300">Disconnected</span>
+      </div>
+    </section>
+
+    <div class="grid xl:grid-cols-[1fr_320px] gap-5">
+      <section class="glass rounded-2xl p-3 md:p-4 shadow-2xl">
+        <div class="flex items-center justify-between px-2 mb-3">
+          <div>
+            <h2 class="font-bold text-lg">LIVE RACE</h2>
+            <p class="text-xs text-slate-400">#mobil1 - #mobil6 untuk memberikan boost</p>
+          </div>
+          <div id="raceStatus" class="text-xs font-bold text-blue-400">RACE READY</div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-xl bg-slate-950">
+          <canvas id="gameCanvas" width="1200" height="720" class="block w-full h-auto"></canvas>
+
+          <div
+            id="winnerOverlay"
+            class="hidden absolute inset-0 bg-black/70 items-center justify-center backdrop-blur-sm"
+          >
+            <div class="text-center p-8 rounded-3xl bg-slate-900 border border-white/10 shadow-2xl">
+              <div class="text-6xl mb-3">🏆</div>
+              <div class="text-sm uppercase tracking-widest text-slate-400">Winner</div>
+              <div id="winnerText" class="text-3xl font-black mt-1">Mobil Merah</div>
+              <div id="winnerCountdown" class="text-slate-400 text-sm mt-3">Restarting...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="glass rounded-2xl p-4 shadow-2xl max-h-[720px] overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-bold">LIVE Activity</h2>
+          <button id="clearLog" class="text-xs text-slate-400 hover:text-white">Clear</button>
+        </div>
+        <div id="activityLog" class="space-y-2 overflow-y-auto max-h-[620px] pr-1">
+          <div class="text-sm text-slate-500">Belum ada event...</div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-5 grid sm:grid-cols-3 gap-3">
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl mb-1">❤️</div>
+        <div class="font-bold">LIKE</div>
+        <div class="text-xs text-slate-400 mt-1">Semua mobil mendapat speed boost kecil.</div>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl mb-1">💬</div>
+        <div class="font-bold">COMMENT</div>
+        <div class="text-xs text-slate-400 mt-1">Ketik #mobil1 sampai #mobil6.</div>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl mb-1">🎁</div>
+        <div class="font-bold">GIFT</div>
+        <div class="text-xs text-slate-400 mt-1">Gift memberikan Super Boost ke Mobil 1.</div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/game.js"></script>
+</body>
+</html>
